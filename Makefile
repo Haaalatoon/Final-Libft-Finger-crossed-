@@ -13,6 +13,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
+# Mandatory and Bonus Sources
 MANDATORY_SRCS = ft_atoi.c\
 	ft_bzero.c\
 	ft_calloc.c\
@@ -58,29 +59,38 @@ BONUS_SRCS = ft_lstadd_back_bonus.c\
 	ft_lstnew_bonus.c\
 	ft_lstsize_bonus.c
 
+# Object files
 MANDATORY_OBJS = $(MANDATORY_SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
+# Targets
 NAME = libft.a
+BONUS_PRESENT = .bonus_done
 
+# Default target: only builds the mandatory part
 all: $(NAME)
 
+# Build the mandatory library
 $(NAME): $(MANDATORY_OBJS)
 	ar rcs $(NAME) $(MANDATORY_OBJS)
 
-$(BONUS): $(MANDATORY_OBJS) $(BONUS_OBJS)
+# Bonus target: adds bonus files to the library
+bonus: $(MANDATORY_OBJS) $(BONUS_OBJS)
 	ar rcs $(NAME) $(MANDATORY_OBJS) $(BONUS_OBJS)
+	@touch $(BONUS_PRESENT)
 
+# Compile .c files into .o files
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Cleaning rules
 clean:
 	rm -f $(MANDATORY_OBJS) $(BONUS_OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(BONUS_PRESENT)
 
 re: fclean all
 
+# Phony targets
 .PHONY: all clean fclean re bonus
-
