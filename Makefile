@@ -76,7 +76,7 @@ $(NAME): $(MANDATORY_OBJS)
 
 # Bonus target: adds bonus files to the library
 bonus: $(MANDATORY_OBJS) $(BONUS_OBJS)
-	ar rcs $(NAME) $(MANDATORY_OBJS) $(BONUS_OBJS)
+	ar rcs $(NAME) $(MANDATORY_OBJS) $?
 	@touch $(BONUS_PRESENT)
 
 # Compile .c files into .o files
